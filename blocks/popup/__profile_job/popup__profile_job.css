@@ -1,0 +1,25 @@
+.popup__profile_job {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  max-width: 358px;
+  width: 100%;
+  outline-style: none;
+  padding: 30px 0 13px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 530px) {
+  .popup__profile_job {
+    max-width: 290px;
+  }
+}
+  
+@media screen and (max-width: 430px) {
+  .popup__profile_job {
+    max-width: 238px;
+  }
+}
