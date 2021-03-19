@@ -12,9 +12,7 @@
     </header>
     <main class="content">
         <section class="profile">
-          <div class="profile__users">
             <img class="profile__avatar" src="../mesto/images/avatar.jpg" alt="Аватар">
-          </div>
           <div class="profile__info">
             <div class="profile__description">
               <h1 class="profile__name">Попугай Жора</h1>
@@ -30,54 +28,42 @@
                     <img src="../mesto/images/lovebirds.jpg" alt="Неразлучники" class="grid-item__photo">
                     <div class="grid-item__description">
                         <h2 class="grid-item__name">Неразлучники</h2> 
-                        <div class="grid-item__container">
                             <button type="button" class="grid-item__like"></button>
-                        </div>
                     </div>
                 </li>
                 <li class="grid-item">
                     <img src="../mesto/images/macaw.jpg" alt="Ара" class="grid-item__photo">
                     <div class="grid-item__description">
                         <h2 class="grid-item__name">Ара</h2> 
-                        <div class="grid-item__container">
                             <button type="button" class="grid-item__like"></button>
-                        </div>
                     </div>
                 </li>
                 <li class="grid-item">
                     <img src="../mesto/images/budgerigar.jpg" alt="Волнистый попугай" class="grid-item__photo">
                     <div class="grid-item__description">
                         <h2 class="grid-item__name">Волнистый попугай</h2> 
-                        <div class="grid-item__container">
                             <button type="button" class="grid-item__like"></button>
-                        </div>
                     </div>
                 </li>
                 <li class="grid-item">
                     <img src="../mesto/images/necklace.jpg" alt="Ожереловый попугай" class="grid-item__photo">
                     <div class="grid-item__description">
                         <h2 class="grid-item__name">Ожереловый</h2> 
-                        <div class="grid-item__container">
                             <button type="button" class="grid-item__like"></button>
-                        </div>
                     </div>
                 </li>
                 <li class="grid-item">
                     <img src="../mesto/images/cockatoo.jpg" alt="Какаду" class="grid-item__photo">
                     <div class="grid-item__description">
                         <h2 class="grid-item__name">Какаду</h2> 
-                        <div class="grid-item__container">
                             <button type="button" class="grid-item__like"></button>
-                        </div>
                     </div>
                 </li>
                 <li class="grid-item">
                     <img src="../mesto/images/lory.jpg" alt="Лори" class="grid-item__photo">
                     <div class="grid-item__description">
                         <h2 class="grid-item__name">Лори</h2> 
-                        <div class="grid-item__container">
                             <button type="button" class="grid-item__like"></button>
-                        </div>
                     </div>
                 </li>
             </ul>
@@ -89,9 +75,9 @@
     <div class="popup">
         <div class="popup__container">
             <h3 class="popup__title">Редактировать профиль</h3>
-            <form class="popup__form">
-                <input type="text" class="popup__profile popup__profile_name" name="name" id="name" placeholder="Имя" value="Попугай Жора" required>
-                <input type="text" class="popup__profile popup__profile_job" name="job" placeholder="Должность" id="job" value="Попугай-исследователь" required>
+            <form class="popup__form" name="editProfile">
+                <input type="text" class="popup__profile popup__profile_name_name" name="name" id="name" placeholder="Имя" value="Попугай Жора" required>
+                <input type="text" class="popup__profile popup__profile_name_job" name="job" placeholder="Должность" id="job" value="Попугай-исследователь" required>
                 <button type="submit" class="popup__button-save">Сохранить</button>
             </form>
             <button type="button" class="popup__button-close"></button>
