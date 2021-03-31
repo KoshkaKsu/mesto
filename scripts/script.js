@@ -63,6 +63,9 @@ initialCards.forEach( elem => {
       evt.target.classList.toggle('grid-item__like_active');
     });
 
+    let deleteCard = cardsElement.querySelector('.grid-item__delete');
+    deleteCard.addEventListener('click', () => cardsElement.remove());
+
     photosList.append(cardsElement);
 });
 
@@ -96,8 +99,13 @@ function formSubmitHandler (evt) {
 function cardsSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
     let cardsElement = templatePhoto.cloneNode(true);
+  
     cardsElement.querySelector('.grid-item__name').textContent = titleInput.value;
     cardsElement.querySelector('.grid-item__photo').src = photoInput.value;
+
+    let deleteCard = cardsElement.querySelector('.grid-item__delete');
+    deleteCard.addEventListener('click', () => cardsElement.remove());
+
     closeAddButton();
     photosList.prepend(cardsElement);
 }
