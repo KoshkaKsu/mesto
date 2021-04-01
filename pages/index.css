@@ -40,8 +40,12 @@
 @import url('../blocks/popup/__profile/_name/popup__profile_name_job.css');
 @import url('../blocks/popup/__profile/_name/popup__profile_name_title.css');
 @import url('../blocks/popup/__profile/_name/popup__profile_name_photo.css');
+@import url('../blocks/popup/__card-button/popup__card-button.css');
 @import url('../blocks/popup/__title/popup__title.css');
-
+@import url('../blocks/popup/__card/popup__card.css');
+@import url('../blocks/popup/__wrap/popup__wrap.css');
+@import url('../blocks/popup/__image/popup__image.css');
+@import url('../blocks/popup/__title-card/popup__title-card.css');
 
 
 
