@@ -8,7 +8,7 @@ let profileJob = document.querySelector('.profile__job');
 let nameInput = popup.querySelector('.popup__profile_name_name');
 let jobInput = popup.querySelector('.popup__profile_name_job');
 
-let popupPlace = document.querySelector('.popup__place');
+let popupPlace = document.querySelector('#popup-place');
 let popupAddButton = document.querySelector('.profile__add-button');
 let photos = document.querySelector('.photos');
 let namePlace = popupPlace.querySelector('.popup__profile_name_title');
@@ -20,7 +20,7 @@ let photosList = document.querySelector('.elements');
 let titleInput = document.querySelector('.popup__profile_name_title');
 let photoInput = document.querySelector('.popup__profile_name_photo');
 
-let popupCard = document.querySelector('.popup__card');
+let popupCard = document.querySelector('#popup-card');
 let popupCardCloseButton = popupCard.querySelector('.popup__button-close');
 let popupCardImage = document.querySelector('.popup__image');
 let popupCardTitle = document.querySelector('.popup__title-card');
