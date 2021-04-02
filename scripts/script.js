@@ -72,14 +72,14 @@ initialCards.forEach( elem => {
     let deleteCard = cardsElement.querySelector('.grid-item__delete');
     deleteCard.addEventListener('click', () => cardsElement.remove());
 
-    function photoReveal (evt) {
+    function revealPhoto (evt) {
       evt.preventDefault();
       popupCardTitle.textContent = elem.name;
       popupCardImage.src = elem.link;
       openCard();
     };
 
-    cardsElement.querySelector('.grid-item__photo').addEventListener('click', photoReveal);
+    cardsElement.querySelector('.grid-item__photo').addEventListener('click', revealPhoto);
 
     photosList.append(cardsElement);
 });
@@ -141,14 +141,14 @@ function cardsSubmitHandler (evt) {
     let deleteCard = cardsElement.querySelector('.grid-item__delete');
     deleteCard.addEventListener('click', () => cardsElement.remove());
 
-    function photoReveal (evt) {
+    function revealPhoto (evt) {
       evt.preventDefault();
       popupCardTitle.textContent = titleInput.value;
       popupCardImage.src = photoInput.value;
       openCard();
     };
 
-    cardsElement.querySelector('.grid-item__photo').addEventListener('click', photoReveal);
+    cardsElement.querySelector('.grid-item__photo').addEventListener('click', revealPhoto);
 
     closeAddButton();
     photosList.prepend(cardsElement);
