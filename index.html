@@ -34,8 +34,10 @@
         <div class="popup__container">
             <h3 class="popup__title">Редактировать профиль</h3>
             <form class="popup__form" name="editProfile">
-                <input type="text" class="popup__profile popup__profile_name_name" name="name" id="name" placeholder="Имя" value="Попугай Жора" required>
-                <input type="text" class="popup__profile popup__profile_name_job" name="job" placeholder="Должность" id="job" value="Попугай-исследователь" required>
+                <input type="text" class="popup__profile popup__profile_name_name popup__form-input" name="name" id="name" placeholder="Имя" value="Попугай Жора" minlength="2" maxlength="40" required>
+                <span class='popup__input-error name-error' id='name-input-error'></span>
+                <input type="text" class="popup__profile popup__profile_name_job popup__form-input" name="job" placeholder="Должность" id="job" value="Попугай-исследователь" minlength="2" maxlength="400" required>
+                <span class='popup__input-error job-error' id='job-input-error'></span>
                 <button type="submit" class="popup__button-save">Сохранить</button>
             </form>
             <button type="button" class="popup__button-close"></button>
@@ -46,8 +48,10 @@
         <div class="popup__container">
               <h3 class="popup__title">Новое место</h3>
               <form class="popup__form popup__form_card-add" name="addCard">
-                <input type="text" class="popup__profile popup__profile_name_title" name="title" id="title" placeholder="Название" required>
-                <input type="url" class="popup__profile popup__profile_name_photo" name="link" id="link" placeholder="Ссылка на фото" required>
+                <input type="text" class="popup__profile popup__profile_name_title popup__form-input" name="title" id="title" placeholder="Название" minlength="2" maxlength="30" required>
+                <span class='popup__input-error title-error' id='title-input-error'></span>
+                <input type="url" class="popup__profile popup__profile_name_photo popup__form-input" name="link" id="link" placeholder="Ссылка на фото" required>
+                <span class='popup__input-error link-error' id='link-input-error'></span>
                 <button type="submit" class="popup__button-save">Создать</button>
               </form>
               <button type="button" class="popup__button-close"></button>
@@ -75,6 +79,6 @@
 
     <script src="./scripts/initial-cards.js"></script>
     <script src="./scripts/script.js"></script>
-
+    <script src="./scripts/validate.js"></script>
 </body>
 </html>
