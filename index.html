@@ -31,13 +31,14 @@
     </footer>
 
     <div class="popup popup_type_profile-edit">
+        <div class="popup__overlay popup_type_profile-overlay"></div>
         <div class="popup__container">
             <h3 class="popup__title">Редактировать профиль</h3>
             <form class="popup__form" name="editProfile">
                 <input type="text" class="popup__profile popup__profile_name_name popup__form-input" name="name" id="name" placeholder="Имя" value="Попугай Жора" minlength="2" maxlength="40" required>
-                <span class='popup__input-error name-error' id='name-input-error'></span>
+                <span class='popup__input-error name-error'></span>
                 <input type="text" class="popup__profile popup__profile_name_job popup__form-input" name="job" placeholder="Должность" id="job" value="Попугай-исследователь" minlength="2" maxlength="400" required>
-                <span class='popup__input-error job-error' id='job-input-error'></span>
+                <span class='popup__input-error job-error'></span>
                 <button type="submit" class="popup__button-save">Сохранить</button>
             </form>
             <button type="button" class="popup__button-close"></button>
@@ -45,6 +46,7 @@
     </div>
 
     <div class="popup popup_type_card-add">
+        <div class="popup__overlay popup_type_card-overlay"></div>
         <div class="popup__container">
               <h3 class="popup__title">Новое место</h3>
               <form class="popup__form popup__form_card-add" name="addCard">
@@ -59,6 +61,7 @@
     </div>
 
     <div class="popup popup_type_image">
+        <div class="popup__overlay popup_type_image-overlay"></div>
         <div class="popup__card">
           <img src="#" alt="#" class="popup__image">
           <p class="popup__title-card"></p>

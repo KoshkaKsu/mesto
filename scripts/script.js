@@ -24,6 +24,10 @@ const imageCloseButton = imagePopup.querySelector('.popup__button-close');
 const imageCard = imagePopup.querySelector('.popup__image');
 const imageTitle = imagePopup.querySelector('.popup__title-card');
 
+const overlayProfilePopup = document.querySelector('.popup_type_profile-overlay');
+const overlayCardPopup = document.querySelector('.popup_type_card-overlay');
+const overlayImagePopup = document.querySelector('.popup_type_image-overlay');
+
 //обработчик формы добавления новой карточки
 function cardsSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
@@ -31,7 +35,7 @@ function cardsSubmitHandler(evt) {
     const cardPhotoValue = photoInput.value;
     addCard({ name: cardTitleValue,
       link: cardPhotoValue });
-    cardPopupForm.reset();
+      cardPopupForm.reset(); 
     closePopup(cardPopup);
 }
 
@@ -79,6 +83,7 @@ function addCard (elem) {
 //открытие попапа
 function openPopup(elem) {
   elem.classList.add('popup_opened');
+  document.addEventListener("keydown", closePopupEsc);
 };
 
 //открытие попапа редактирования профиля
@@ -91,7 +96,17 @@ function openProfilePopup() {
 //закрытие попапа
 function closePopup(elem) {
   elem.classList.remove('popup_opened');
+  document.addEventListener("keydown", closePopupEsc);
 };
+
+//закрытие попапа Esc
+function closePopupEsc(evt) {
+  const popup = document.querySelector('.popup_opened')
+  if (evt.key === "Escape") {
+      closePopup(popup);
+    }
+
+}
 
 //обработчик формы редактирования профиля
 function handleProfileSubmit (evt) {
@@ -107,6 +122,10 @@ cardAddButton.addEventListener('click',() => openPopup(cardPopup));
 profileCloseButton.addEventListener('click',() => closePopup(profilePopup));
 cardCloseButton.addEventListener('click',() => closePopup(cardPopup));
 imageCloseButton.addEventListener('click',() => closePopup(imagePopup));
+
+overlayProfilePopup.addEventListener("click", () => closePopup(profilePopup));
+overlayCardPopup.addEventListener("click", () => closePopup(cardPopup));
+overlayImagePopup.addEventListener("click", () => closePopup(imagePopup));
 
 profilePopup.addEventListener('submit', handleProfileSubmit);
 cardPopup.addEventListener('submit', cardsSubmitHandler);
