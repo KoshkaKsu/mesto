@@ -24,9 +24,9 @@ const imageCloseButton = imagePopup.querySelector('.popup__button-close');
 const imageCard = imagePopup.querySelector('.popup__image');
 const imageTitle = imagePopup.querySelector('.popup__title-card');
 
-const overlayProfilePopup = document.querySelector('.popup_type_profile-overlay');
-const overlayCardPopup = document.querySelector('.popup_type_card-overlay');
-const overlayImagePopup = document.querySelector('.popup_type_image-overlay');
+const overlayProfilePopup = document.querySelector('.popup__overlay_profile');
+const overlayCardPopup = document.querySelector('.popup__overlay_card');
+const overlayImagePopup = document.querySelector('.popup__overlay_image');
 
 //обработчик формы добавления новой карточки
 function cardsSubmitHandler(evt) {
