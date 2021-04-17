@@ -28,6 +28,7 @@ const overlayProfilePopup = document.querySelector('.popup__overlay_profile');
 const overlayCardPopup = document.querySelector('.popup__overlay_card');
 const overlayImagePopup = document.querySelector('.popup__overlay_image');
 
+
 //обработчик формы добавления новой карточки
 function cardsSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
@@ -35,7 +36,7 @@ function cardsSubmitHandler(evt) {
     const cardPhotoValue = photoInput.value;
     addCard({ name: cardTitleValue,
       link: cardPhotoValue });
-      cardPopupForm.reset(); 
+    cardPopupForm.reset(); 
     closePopup(cardPopup);
 }
 
@@ -96,13 +97,13 @@ function openProfilePopup() {
 //закрытие попапа
 function closePopup(elem) {
   elem.classList.remove('popup_opened');
-  document.addEventListener("keydown", closePopupEsc);
+  document.removeEventListener("keydown", closePopupEsc);
 };
 
 //закрытие попапа Esc
 function closePopupEsc(evt) {
-  const popup = document.querySelector('.popup_opened')
   if (evt.key === "Escape") {
+      const popup = document.querySelector('.popup_opened');
       closePopup(popup);
     }
 
