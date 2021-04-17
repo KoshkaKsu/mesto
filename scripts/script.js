@@ -58,18 +58,20 @@ function createCard(cardData) {
   //удаление карточки
   const deleteCard = cardsElement.querySelector('.grid-item__delete');
   deleteCard.addEventListener('click', () => cardsElement.remove());
-  
-  //обработка клика по картинке и открытие попапа карточки
-  function revealPhoto () {
-    imageTitle.textContent = cardData.name;
-    imageCard.src = cardData.link;
-    imageCard.alt = cardData.name;
-    openPopup(imagePopup);
-  };
-  cardsPhoto.addEventListener('click', revealPhoto);
+  revealPhoto(cardData, cardsPhoto);
 
   return cardsElement; //возвращается созданная карточка
 };
+ 
+  //обработка клика по картинке и открытие попапа карточки
+  function revealPhoto (elem, photo) {
+    photo.addEventListener('click', () => {
+    imageTitle.textContent = elem.name;
+    imageCard.src = elem.link;
+    imageCard.alt = elem.name;
+    openPopup(imagePopup);
+    });
+  };
 
 //добавление новой карточки
 function addCard (elem) {
@@ -106,7 +108,6 @@ function closePopupEsc(evt) {
       const popup = document.querySelector('.popup_opened');
       closePopup(popup);
     }
-
 }
 
 //обработчик формы редактирования профиля
