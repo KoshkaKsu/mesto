@@ -29,6 +29,7 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector, ina
     buttonElement.setAttribute("disabled", true);
     buttonElement.classList.add(inactiveButtonClass);
    });
+   
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
@@ -63,5 +64,6 @@ const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
     submitButtonSelector: '.popup__button-save',
     inactiveButtonClass: 'popup__button-disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
+    errorClass: 'popup__input-error_active',
+    templateClass: 'photo-template',
   });

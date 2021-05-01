@@ -1,3 +1,6 @@
+import {Card} from './Card.js';
+//import {FormValidator} from './FormValidator.js';
+
 const profilePopup = document.querySelector('.popup_type_profile-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileCloseButton = profilePopup.querySelector('.popup__button-close');
@@ -28,6 +31,16 @@ const overlayProfilePopup = document.querySelector('.popup__overlay_profile');
 const overlayCardPopup = document.querySelector('.popup__overlay_card');
 const overlayImagePopup = document.querySelector('.popup__overlay_image');
 
+const enableValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__profile',
+  submitButtonSelector: '.popup__button-save',
+  inactiveButtonClass: 'popup__button-disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
+  templateClass: '.photo-template',
+};
+
 
 //обработчик формы добавления новой карточки
 function cardsSubmitHandler(evt) {
@@ -35,42 +48,42 @@ function cardsSubmitHandler(evt) {
     const cardTitleValue = titleInput.value;
     const cardPhotoValue = photoInput.value;
     addCard({ name: cardTitleValue,
-      link: cardPhotoValue });
-    cardPopupForm.reset(); 
+      link: cardPhotoValue }); 
     closePopup(cardPopup);
+    cardPopupForm.reset();
 }
 
 //создание новой карточки
 function createCard(cardData) {
-  const cardsElement = templatePhoto.cloneNode(true);
-  const cardsLike = cardsElement.querySelector('.grid-item__like');
-  const cardsPhoto = cardsElement.querySelector('.grid-item__photo');
-
-  cardsElement.querySelector('.grid-item__name').textContent = cardData.name;
-  cardsPhoto.src = cardData.link;
-  cardsPhoto.alt = cardData.name;
+  const card = new Card(cardData, enableValidation.templateClass, revealPhoto);
+  const cardsElement = card.generateCard();
+  //const cardsElement = templatePhoto.cloneNode(true);
+  //const cardsLike = cardsElement.querySelector('.grid-item__like');
+  //const cardsPhoto = cardsElement.querySelector('.grid-item__photo');
+  //cardsPhoto.src = cardData.link;
+  //revealPhoto(cardData, cardsPhoto);
+  //cardsElement.querySelector('.grid-item__name').textContent = cardData.name;
+  //cardsPhoto.alt = cardData.name;
 
   //добавление и снятие лайков
-  cardsLike.addEventListener('click', function (evt) {
-    evt.target.classList.toggle('grid-item__like_active');
-  });
-
+  //cardsLike.addEventListener('click', function (evt) {
+  //  evt.target.classList.toggle('grid-item__like_active');
+  //});
   //удаление карточки
-  const deleteCard = cardsElement.querySelector('.grid-item__delete');
-  deleteCard.addEventListener('click', () => cardsElement.remove());
-  revealPhoto(cardData, cardsPhoto);
+  //const deleteCard = cardsElement.querySelector('.grid-item__delete');
+ // deleteCard.addEventListener('click', () => cardsElement.remove());
 
   return cardsElement; //возвращается созданная карточка
 };
- 
+
   //обработка клика по картинке и открытие попапа карточки
-  function revealPhoto (elem, photo) {
-    photo.addEventListener('click', () => {
-    imageTitle.textContent = elem.name;
-    imageCard.src = elem.link;
-    imageCard.alt = elem.name;
+  function revealPhoto (name, link) {
+  // photo.addEventListener('click', () => {
+    imageTitle.textContent = name;
+    imageCard.src = link;
+    imageCard.alt = name;
     openPopup(imagePopup);
-    });
+   //});
   };
 
 //добавление новой карточки
@@ -79,8 +92,8 @@ function addCard (elem) {
 };
 
 //заполнение карточек из массива
- initialCards.forEach(elem => {
-    photosList.append(createCard(elem));
+initialCards.forEach(cardData => {
+    photosList.append(createCard(cardData));
  });
 
 //открытие попапа
