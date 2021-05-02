@@ -1,5 +1,5 @@
 import {Card} from './Card.js';
-//import {FormValidator} from './FormValidator.js';
+import {FormValidator} from './FormValidator.js';
 
 const profilePopup = document.querySelector('.popup_type_profile-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -12,9 +12,6 @@ const profileJobInput = profilePopup.querySelector('.popup__profile_name_job');
 const cardPopup = document.querySelector('.popup_type_card-add');
 const cardPopupForm = cardPopup.querySelector('.popup__form_card-add');
 const cardAddButton = document.querySelector('.profile__add-button');
-const photos = document.querySelector('.photos');
-const cardName = cardPopup.querySelector('.popup__profile_name_title');
-const cardLink = cardPopup.querySelector('.popup__profile_name_photo');
 const cardCloseButton = cardPopup.querySelector('.popup__button-close');
 
 const templatePhoto = document.querySelector('#photo-template').content.querySelector('.grid-item');
@@ -31,7 +28,7 @@ const overlayProfilePopup = document.querySelector('.popup__overlay_profile');
 const overlayCardPopup = document.querySelector('.popup__overlay_card');
 const overlayImagePopup = document.querySelector('.popup__overlay_image');
 
-const enableValidation = {
+const validateConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__profile',
   submitButtonSelector: '.popup__button-save',
@@ -41,49 +38,30 @@ const enableValidation = {
   templateClass: '.photo-template',
 };
 
-
 //обработчик формы добавления новой карточки
 function cardsSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
     const cardTitleValue = titleInput.value;
     const cardPhotoValue = photoInput.value;
     addCard({ name: cardTitleValue,
-      link: cardPhotoValue }); 
+    link: cardPhotoValue }); 
     closePopup(cardPopup);
     cardPopupForm.reset();
 }
 
 //создание новой карточки
 function createCard(cardData) {
-  const card = new Card(cardData, enableValidation.templateClass, revealPhoto);
+  const card = new Card(cardData, validateConfig.templateClass, revealPhoto);
   const cardsElement = card.generateCard();
-  //const cardsElement = templatePhoto.cloneNode(true);
-  //const cardsLike = cardsElement.querySelector('.grid-item__like');
-  //const cardsPhoto = cardsElement.querySelector('.grid-item__photo');
-  //cardsPhoto.src = cardData.link;
-  //revealPhoto(cardData, cardsPhoto);
-  //cardsElement.querySelector('.grid-item__name').textContent = cardData.name;
-  //cardsPhoto.alt = cardData.name;
-
-  //добавление и снятие лайков
-  //cardsLike.addEventListener('click', function (evt) {
-  //  evt.target.classList.toggle('grid-item__like_active');
-  //});
-  //удаление карточки
-  //const deleteCard = cardsElement.querySelector('.grid-item__delete');
- // deleteCard.addEventListener('click', () => cardsElement.remove());
-
   return cardsElement; //возвращается созданная карточка
 };
 
   //обработка клика по картинке и открытие попапа карточки
   function revealPhoto (name, link) {
-  // photo.addEventListener('click', () => {
     imageTitle.textContent = name;
     imageCard.src = link;
     imageCard.alt = name;
     openPopup(imagePopup);
-   //});
   };
 
 //добавление новой карточки
@@ -130,6 +108,11 @@ function handleProfileSubmit (evt) {
     profileJob.textContent = profileJobInput.value; 
     closePopup(profilePopup);
 };
+
+const addFormValidator = new FormValidator (validateConfig, document.querySelector('.popup__form_card-add'));
+addFormValidator.enableValidation();
+const editFormValidator = new FormValidator (validateConfig, document.querySelector('.popup__form_edit-profile'));
+editFormValidator.enableValidation();
 
 profileEditButton.addEventListener('click',() => openProfilePopup(profilePopup));
 cardAddButton.addEventListener('click',() => openPopup(cardPopup));
