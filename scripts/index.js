@@ -11,10 +11,10 @@ const profileJobInput = profilePopup.querySelector('.popup__profile_name_job');
 
 const cardPopup = document.querySelector('.popup_type_card-add');
 const cardPopupForm = cardPopup.querySelector('.popup__form_card-add');
+//const profilePopupForm = cardPopup.querySelector('.popup__form_edit-profile');
 const cardAddButton = document.querySelector('.profile__add-button');
 const cardCloseButton = cardPopup.querySelector('.popup__button-close');
 
-const templatePhoto = document.querySelector('#photo-template').content.querySelector('.grid-item');
 const photosList = document.querySelector('.elements');
 const titleInput = document.querySelector('.popup__profile_name_title');
 const photoInput = document.querySelector('.popup__profile_name_photo');
@@ -84,6 +84,7 @@ function openPopup(elem) {
 function openProfilePopup() {
   profileNameInput.value = profileName.textContent;
   profileJobInput.value = profileJob.textContent;
+  editFormValidator.resetValidation(); 
   openPopup(profilePopup);
 };
 
@@ -115,7 +116,9 @@ const editFormValidator = new FormValidator (validateConfig, document.querySelec
 editFormValidator.enableValidation();
 
 profileEditButton.addEventListener('click',() => openProfilePopup(profilePopup));
-cardAddButton.addEventListener('click',() => openPopup(cardPopup));
+cardAddButton.addEventListener('click',() => { addFormValidator.resetValidation();
+                                               openPopup(cardPopup);
+});
 
 profileCloseButton.addEventListener('click',() => closePopup(profilePopup));
 cardCloseButton.addEventListener('click',() => closePopup(cardPopup));
@@ -127,4 +130,5 @@ overlayImagePopup.addEventListener("click", () => closePopup(imagePopup));
 
 profilePopup.addEventListener('submit', handleProfileSubmit);
 cardPopup.addEventListener('submit', cardsSubmitHandler);
+
 
