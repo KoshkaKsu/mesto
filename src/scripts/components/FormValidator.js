@@ -44,13 +44,6 @@
       });
     });
   }; 
-  
-  _resetFormState() {
-    this._inputList.forEach(inputElement => {
-        this._hideInputError(inputElement);
-    });
-    _toggleButtonState();
-}
 
   enableValidation() {
     this._formElement.addEventListener('submit', evt => evt.preventDefault());

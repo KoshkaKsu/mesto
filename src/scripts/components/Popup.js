@@ -1,6 +1,6 @@
 export default class Popup {
-    constructor(imagePopup) {
-        this._popup = imagePopup;
+    constructor(popupSelector) {
+        this._popup = document.querySelector(popupSelector);
         this._closePopupEsc = this._closePopupEsc.bind(this);
     }
 

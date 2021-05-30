@@ -1,12 +1,12 @@
 import './index.css';
 
 import {initialCards} from '../scripts/initialCards.js'
-import Section from '../scripts/Section.js';
-import PopupWithImage from '../scripts/PopupWithImage.js';
-import PopupWithForm from "../scripts/PopupWithForm.js";
-import Card from '../scripts/Card.js';
-import {FormValidator} from '../scripts/FormValidator.js';
-import UserInfo from '../scripts/UserInfo.js'
+import Section from '../scripts/components/Section';
+import PopupWithImage from '../scripts/components/PopupWithImage';
+import PopupWithForm from "../scripts/components/PopupWithForm";
+import Card from '../scripts/components/Card';
+import {FormValidator} from '../scripts/components/FormValidator';
+import UserInfo from '../scripts/components/UserInfo';
 
 const profilePopup = document.querySelector('.popup_type_profile-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -25,10 +25,10 @@ const photosList = document.querySelector('.elements');
 const imagePopup = document.querySelector('.popup_type_image');
 
 const userInfo = new UserInfo({nameSelector, jobSelector});
-const popupWithImage = new PopupWithImage(imagePopup);
+const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
-const popupEditForm = new PopupWithForm(profilePopup, (formInputs) => {
+const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
   const newProfileValues = {
     name: formInputs.name,
     job: formInputs.job
@@ -37,16 +37,10 @@ const popupEditForm = new PopupWithForm(profilePopup, (formInputs) => {
 });
 popupEditForm.setEventListeners();
 
-const popupCardForm = new PopupWithForm(cardPopup, (formInputs) => {
-  const card = new Card({
-    link: formInputs.link,
-    name: formInputs.title
-    }, ".photo-template", (link, title) => {
-    popupWithImage.openPopup(link, title);
-  });
-const cardElement = card.generateCard();
-cardList.prependItem(cardElement);
+const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
+  cardList.prependItem(returnCardForm(formInputs));
 })
+ 
 popupCardForm.setEventListeners();
 
 const validateConfig = {
@@ -67,14 +61,27 @@ editFormValidator.enableValidation();
 const cardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    const card = new Card(item, ".photo-template", (name, link) => {
-      popupWithImage.openPopup(name, link);
-    });
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
+    cardList.addItem(returnCard(item));
   }
 }, photosList);
 cardList.renderItems();
+
+function returnCard(item) {
+    const card = new Card(item, ".photo-template", (name, link) => {
+      popupWithImage.openPopup(name, link);
+    });
+    return card.generateCard();
+}
+
+function returnCardForm(formInputs) {
+  const card = new Card({
+    link: formInputs.link, 
+    name: formInputs.title
+    }, ".photo-template", (link, title) => {
+    popupWithImage.openPopup(link, title);
+  });
+  return card.generateCard();
+}
 
 profileEditButton.addEventListener("click", (evt) => {
   evt.preventDefault();
