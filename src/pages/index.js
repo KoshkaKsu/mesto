@@ -22,8 +22,6 @@ const cardAddButton = document.querySelector('.profile__add-button');
 
 const photosList = document.querySelector('.elements');
 
-const imagePopup = document.querySelector('.popup_type_image');
-
 const userInfo = new UserInfo({nameSelector, jobSelector});
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
@@ -38,9 +36,12 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs)
 popupEditForm.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
-  cardList.prependItem(returnCardForm(formInputs));
+  cardList.prependItem(createCard({
+    link: formInputs.link,
+    name: formInputs.title
+  }));
 })
- 
+
 popupCardForm.setEventListeners();
 
 const validateConfig = {
@@ -61,25 +62,15 @@ editFormValidator.enableValidation();
 const cardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    cardList.addItem(returnCard(item));
+    cardList.addItem(createCard(item));
   }
 }, photosList);
 cardList.renderItems();
 
-function returnCard(item) {
-    const card = new Card(item, ".photo-template", (name, link) => {
-      popupWithImage.openPopup(name, link);
-    });
-    return card.generateCard();
-}
-
-function returnCardForm(formInputs) {
-  const card = new Card({
-    link: formInputs.link, 
-    name: formInputs.title
-    }, ".photo-template", (link, title) => {
-    popupWithImage.openPopup(link, title);
-  });
+function createCard(item) {
+  const card = new Card(item, ".photo-template", {revealPhoto: (name, link) => {
+    popupWithImage.openPopup({name, link});
+    }});
   return card.generateCard();
 }
 

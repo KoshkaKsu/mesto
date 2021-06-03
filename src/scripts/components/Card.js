@@ -1,5 +1,5 @@
 export default class Card {
-    constructor(data, cardSelector, revealPhoto) {
+    constructor(data, cardSelector, {revealPhoto}) {
       this._title = data.name;
       this._link = data.link;
       this._cardSelector = cardSelector;
