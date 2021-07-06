@@ -11,7 +11,10 @@
     </header>
     <main class="content">
         <section class="profile">
-            <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар">
+            <div class="profile__info_type_avatar">
+                <div class="profile__edit-button-avatar"></div>
+                <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар">
+            </div>
           <div class="profile__info">
             <div class="profile__description">
               <h1 class="profile__name">Попугай Жора</h1>
@@ -68,14 +71,41 @@
         </div>
     </div>
 
+    <div class="popup popup_type_delete">
+        <div class="popup__overlay popup__overlay_delete"></div>
+        <div class="popup__container">
+            <form class="popup__form popup__form_card-delete" name="deleteCard">
+                <h2 class="popup__title popup__title_type_delete">Вы уверены?</h2>
+                <button type="submit" class="popup__button-save">Да</button>
+                <button type="button" class="popup__button-close"></button>
+              </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_avatar-edit">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+          <form class="popup__form" name="editAvatar">
+            <h2 class="popup__title popup__title_type_edit">Обновить аватар</h2>
+            <input type="url" class="popup__profile" name="link" id="avatar-input" minlength="2" placeholder="Ссылка на картинку" required />
+            <span class="popup__input-error link-error" id="avatar-link-input-error" ></span>
+            <button type="submit" class="popup__button-save">Cохранить</button>
+            <button type="button" class="popup__button-close"></button>
+          </form>
+        </div>
+      </div>
+
     <template class= "photo-template" id="photo-template">
         <li class="grid-item">
             <img src="#" alt="#" class="grid-item__photo">
                 <div class="grid-item__description">
                     <h2 class="grid-item__name"></h2> 
+                    <div class="grid-item_group">
                         <button type="button" class="grid-item__like"></button>
-                        <button type="button" class="grid-item__delete"></button>
-            </div>
+                        <span class="grid-item__like-info">1</span>
+                    </div>
+                </div>
+           <button type="button" class="grid-item__delete"></button>
         </li>
     </template>
 </body>

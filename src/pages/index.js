@@ -1,6 +1,6 @@
 import './index.css';
-
-import {initialCards} from '../scripts/initialCards.js'
+import Api from "../scripts/components/Api";
+import {initialCards} from '../scripts/initialCards.js';
 import Section from '../scripts/components/Section';
 import PopupWithImage from '../scripts/components/PopupWithImage';
 import PopupWithForm from "../scripts/components/PopupWithForm";
@@ -13,6 +13,7 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const profilePopupForm = document.querySelector('.popup__form_edit-profile');
 const nameSelector = '.profile__name';
 const jobSelector = '.profile__job';
+const avatarSelector = '.profile__avatar'
 const profileNameInput = profilePopup.querySelector('.popup__profile_name_name');
 const profileJobInput = profilePopup.querySelector('.popup__profile_name_job');
 
@@ -22,7 +23,7 @@ const cardAddButton = document.querySelector('.profile__add-button');
 
 const photosList = document.querySelector('.elements');
 
-const userInfo = new UserInfo({nameSelector, jobSelector});
+const userInfo = new UserInfo({nameSelector, jobSelector, avatarSelector});
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
@@ -53,6 +54,8 @@ const validateConfig = {
   errorClass: 'popup__input-error_active',
   templateClass: '.photo-template',
 };
+
+const api = new Api(`https://mesto.nomoreparties.co/v1/cohort-24`,'f12d97c5-3bd7-4a64-bc24-17e685180ee0');
 
 const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
 addFormValidator.enableValidation();
@@ -92,4 +95,18 @@ cardAddButton.addEventListener("click", (evt) => {
   popupCardForm.openPopup();
 });
 
+//Получение инфорации по карточкам
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData]) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      id: userData._id,
+   });
+    cardList.renderItems();
+    userInfo.setUserAvatar(userData.avatar);
+  })
+  .catch(error => {
+    console.log(`Ошибка при получении данных: ${error}`);
+  })
 
