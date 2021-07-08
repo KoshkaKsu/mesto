@@ -1,6 +1,6 @@
 import './index.css';
 import Api from "../scripts/components/Api";
-import {initialCards} from '../scripts/initialCards.js';
+//import {initialCards} from '../scripts/initialCards.js';
 import Section from '../scripts/components/Section';
 import PopupWithImage from '../scripts/components/PopupWithImage';
 import PopupWithForm from "../scripts/components/PopupWithForm";
@@ -20,7 +20,8 @@ const profileJobInput = profilePopup.querySelector('.popup__profile_name_job');
 const cardPopup = document.querySelector('.popup_type_card-add');
 const cardPopupForm = cardPopup.querySelector('.popup__form_card-add');
 const cardAddButton = document.querySelector('.profile__add-button');
-
+let cardList = {};
+let myId = '';
 const photosList = document.querySelector('.elements');
 
 const userInfo = new UserInfo({nameSelector, jobSelector, avatarSelector});
@@ -62,20 +63,29 @@ addFormValidator.enableValidation();
 const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
 editFormValidator.enableValidation();
 
-const cardList = new Section({
-  data: initialCards,
-  renderer: (item) => {
-    cardList.addItem(createCard(item));
-  }
-}, photosList);
-cardList.renderItems();
-
 function createCard(item) {
-  const card = new Card(item, ".photo-template", {revealPhoto: (name, link) => {
+  const card = new Card(item, ".photo-template",
+    {
+     revealPhoto: (name, link) => {
     popupWithImage.openPopup({name, link});
-    }});
+    } 
+    });
   return card.generateCard();
 }
+
+/*const cardElement = card.generateCard();
+    if (obj.owner._id != myId) {
+       cardElement.querySelector('.card__trash-btn').remove();
+    }
+
+    if (obj.likes.find((item) => item._id === myId)) {
+      cardElement
+        .querySelector('.card__like-button')
+        .classList.add('card__like-button_active');
+    }
+  defaultSection.addItem(cardElement);
+  cardElement.querySelector('.card__counter').textContent = obj.likes.length;
+}*/
 
 profileEditButton.addEventListener("click", (evt) => {
   evt.preventDefault();
@@ -97,13 +107,19 @@ cardAddButton.addEventListener("click", (evt) => {
 
 //Получение инфорации по карточкам
 Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then(([userData]) => {
+  .then(([userData, initialCards]) => {
+    cardList = new Section(
+      {
+        data: initialCards.reverse(),
+        renderer: createCard,
+      }, photosList);
+    cardList.renderItems();
+    myId = userData._id;
     userInfo.setUserInfo({
       name: userData.name,
       job: userData.about,
       id: userData._id,
    });
-    cardList.renderItems();
     userInfo.setUserAvatar(userData.avatar);
   })
   .catch(error => {

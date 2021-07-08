@@ -44,5 +44,25 @@ _getResponseData(res) {
         })
     })
         .then(this._getResponseData)
-}
+  }
+
+  likeCard(id){
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token
+      }
+    })
+    .then(this._getResponseData);
+  }
+
+  unLikeCard(id){
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token
+      }
+    })
+    .then(this._getResponseData);
+  }
 }
