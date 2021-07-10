@@ -46,7 +46,7 @@ _getResponseData(res) {
         .then(this._getResponseData)
   }
 
-  likeCard(id){
+  setLike(id){
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',
       headers: {
@@ -56,7 +56,7 @@ _getResponseData(res) {
     .then(this._getResponseData);
   }
 
-  unLikeCard(id){
+  unlike(id){
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: {
@@ -65,4 +65,14 @@ _getResponseData(res) {
     })
     .then(this._getResponseData);
   }
+
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: this._token
+        }
+    })
+    .then(this._getResponseData);
+}
 }
