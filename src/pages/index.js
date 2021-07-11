@@ -118,21 +118,21 @@ function createCard(item) {
     handleCardDelete: (id, elem) => {
       deleteCardImage.openPopup(id, elem);
     },
-    likeCard: (id) => {
+    handleCardLike: (id) => {
       api.setLike(id)
           .then(({likes}) => {
               card._likes = likes;
-              card.updateLikeCount();
+              card.likesCount();
           })
           .catch((err) => {
               console.log(err);
           })
     },
-    dislikeCard: (id) => {
-      api.unlike(id)
+    handleCardDislike: (id) => {
+      api.unLike(id)
           .then(({likes}) => {
               card._likes = likes;
-              card.updateLikeCount();
+              card.likesCount();
           })
           .catch((err) => {
               console.log(err);
