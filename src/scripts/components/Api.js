@@ -61,6 +61,21 @@ _getResponseData(res) {
         .then(this._getResponseData)
 }
 
+ addCard(name, link) {
+    return fetch(`${this._url}/cards`, {
+      method: "POST",
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          name: name,
+          link: link
+      })
+    })
+      .then(this._checkRes)
+}
+
   setLike(id){
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',

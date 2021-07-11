@@ -12,7 +12,7 @@ export default class PopupWithForm extends Popup  {
         
                 setTimeout(() => {
                     this._popup.querySelector('.popup__button-save').textContent = prevTextBtn;
-                }, 1500)
+                }, 1800)
         }
         _getInputValues() {
             this._formValues = {};

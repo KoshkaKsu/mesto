@@ -63,10 +63,15 @@ const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', ({link}) =>
 popupEditAvatar.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
-  cardList.prependItem(createCard({
-    link: formInputs.link,
-    name: formInputs.title
-  }));
+      api.addCard(formInputs.title, formInputs.link)
+           .then(result => {
+               const element = addCard(result)
+               section.addItem(element, 'prepend');
+            })
+            .catch((err) => {
+                console.log(err);
+  })
+       popupCardForm.closePopup();
 })
 popupCardForm.setEventListeners();
 
