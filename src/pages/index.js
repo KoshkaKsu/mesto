@@ -12,6 +12,11 @@ const profilePopup = document.querySelector('.popup_type_profile-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileEditAvatarButton = document.querySelector('.profile__edit-button-avatar');
 const profilePopupForm = document.querySelector('.popup__form_edit-profile');
+const avatarUploadContainer = document.querySelector('.popup_type_avatar-edit');
+const validatorAvatarUpload = new FormValidator(validateConfig, avatarUploadContainer);
+const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
+const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
+
 const nameSelector = '.profile__name';
 const jobSelector = '.profile__job';
 const avatarSelector = '.profile__avatar'
@@ -40,10 +45,12 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs)
 );
 popupEditForm.setEventListeners();
 
-const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', ({link}) => {
-      api.updateAvatar(link)
-          .then(({avatar}) => {
-              userInfo.setUserAvatar(link);
+const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (newAvatarLink) => {
+      api.updateAvatar(newAvatarLink.link)
+          .then(() => {
+              userInfo.setUserAvatar({
+                avatar: newAvatarLink.link
+              });
               popupEditAvatar.closePopup();
           })
           .catch((err) => {
@@ -77,13 +84,6 @@ const validateConfig = {
 };
 
 const api = new Api(`https://mesto.nomoreparties.co/v1/cohort-24`,'f12d97c5-3bd7-4a64-bc24-17e685180ee0');
-
-//const avatarUploadContainer = document.querySelector('.popup_type_avatar-edit');
-//const validatorAvatarUpload = new FormValidator(validateConfig, avatarUploadContainer);
-const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
-addFormValidator.enableValidation();
-const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
-editFormValidator.enableValidation();
 
 //Получение инфорации по карточкам
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -173,11 +173,13 @@ cardAddButton.addEventListener("click", (evt) => {
   popupCardForm.openPopup();
 });
 
-/*validatorAvatarUpload.enableValidation();
-profileEditAvatarButton.addEventListener("click", (evt) => {
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
+validatorAvatarUpload.enableValidation();
+profileEditAvatarButton.addEventListener("click", () => {
   validatorAvatarUpload.resetValidation();
   popupEditAvatar.openPopup();
-});*/
+});
 
 
 
