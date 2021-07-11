@@ -25,10 +25,10 @@ export default class Card {
       this._cardImage.src = this._link;
       this._cardImage.alt = this._title;
       this._cardName.textContent = this._title;
-      this._setEventListeners(); 
       if (this._userId === this._owner) {
         this._element.querySelector(this._cardDelete).classList.add('grid-item__delete_active');
     }
+    this._setEventListeners(); 
       return this._element;
     }
   

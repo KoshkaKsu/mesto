@@ -27,15 +27,6 @@ const userInfo = new UserInfo({nameSelector, jobSelector, avatarSelector});
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
-/*const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
-  const newProfileValues = {
-    name: formInputs.name,
-    job: formInputs.job
-  }
-  userInfo.setUserInfo(newProfileValues);
-});
-popupEditForm.setEventListeners();*/
-
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
       api.editUserInfo(formInputs.name, formInputs.job)
           .then(result => {
@@ -124,11 +115,11 @@ function createCard(item) {
      revealPhoto: (name,link) => {
      popupWithImage.openPopup({name,link});
     },
-    handleCardDelete: (cardId, elem) => {
-      deleteCardImage.openPopup(cardId, elem);
+    handleCardDelete: (id, elem) => {
+      deleteCardImage.openPopup(id, elem);
     },
-    likeCard: (cardId) => {
-      api.setLike(cardId)
+    likeCard: (id) => {
+      api.setLike(id)
           .then(({likes}) => {
               card._likes = likes;
               card.updateLikeCount();
@@ -137,8 +128,8 @@ function createCard(item) {
               console.log(err);
           })
     },
-    dislikeCard: (cardId) => {
-      api.unlike(cardId)
+    dislikeCard: (id) => {
+      api.unlike(id)
           .then(({likes}) => {
               card._likes = likes;
               card.updateLikeCount();
@@ -151,9 +142,8 @@ function createCard(item) {
   return card.generateCard();
 }
 
-const deleteCardImage = new PopupWithDelete('.popup_type_delete', {
-  submitHandler: (cardId) => {
-      api.deleteCard(cardId)
+const deleteCardImage = new PopupWithDelete('.popup_type_delete',(id) => {
+      api.deleteCard(id)
           .then((data) => {
             deleteCardImage.cardElement.remove();
             deleteCardImage.closePopup();
@@ -162,7 +152,7 @@ const deleteCardImage = new PopupWithDelete('.popup_type_delete', {
               console.log(err);
           })
   }
-})
+)
 deleteCardImage.setEventListeners();
 
 profileEditButton.addEventListener("click", (evt) => {
