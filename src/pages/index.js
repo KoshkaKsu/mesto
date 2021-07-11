@@ -12,10 +12,6 @@ const profilePopup = document.querySelector('.popup_type_profile-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileEditAvatarButton = document.querySelector('.profile__edit-button-avatar');
 const profilePopupForm = document.querySelector('.popup__form_edit-profile');
-const avatarUploadContainer = document.querySelector('.popup_type_avatar-edit');
-const validatorAvatarUpload = new FormValidator(validateConfig, avatarUploadContainer);
-const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
-const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
 
 const nameSelector = '.profile__name';
 const jobSelector = '.profile__job';
@@ -45,12 +41,10 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs)
 );
 popupEditForm.setEventListeners();
 
-const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (newAvatarLink) => {
-      api.updateAvatar(newAvatarLink.link)
-          .then(() => {
-              userInfo.setUserAvatar({
-                avatar: newAvatarLink.link
-              });
+const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) => {
+      api.updateAvatar(formData.avatarLink)
+          .then((res) => {
+              userInfo.setUserAvatar(res.avatar);
               popupEditAvatar.closePopup();
           })
           .catch((err) => {
@@ -82,6 +76,12 @@ const validateConfig = {
   errorClass: 'popup__input-error_active',
   templateClass: '.photo-template',
 };
+
+const avatarPopup = document.querySelector('.popup_type_avatar-edit');
+const avatarPopupForm = avatarPopup.querySelector('.popup__form_avatar-update');
+const validatorAvatarUpload = new FormValidator (validateConfig, avatarPopupForm);
+const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
+const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
 
 const api = new Api(`https://mesto.nomoreparties.co/v1/cohort-24`,'f12d97c5-3bd7-4a64-bc24-17e685180ee0');
 
@@ -155,6 +155,10 @@ const deleteCardImage = new PopupWithDelete('.popup_type_delete',(id) => {
 )
 deleteCardImage.setEventListeners();
 
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
+validatorAvatarUpload.enableValidation();
+
 profileEditButton.addEventListener("click", (evt) => {
   evt.preventDefault();
   evt.stopPropagation();
@@ -173,11 +177,8 @@ cardAddButton.addEventListener("click", (evt) => {
   popupCardForm.openPopup();
 });
 
-addFormValidator.enableValidation();
-editFormValidator.enableValidation();
-validatorAvatarUpload.enableValidation();
-profileEditAvatarButton.addEventListener("click", () => {
-  validatorAvatarUpload.resetValidation();
+profileEditAvatarButton.addEventListener("click", (evt) => {
+  //validatorAvatarUpload.resetValidation();
   popupEditAvatar.openPopup();
 });
 

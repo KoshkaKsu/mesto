@@ -40,7 +40,7 @@ _getResponseData(res) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            avatar: newAvatarLink,
+          avatar: newAvatarLink,
         })
     })
         .then(this._getResponseData)
