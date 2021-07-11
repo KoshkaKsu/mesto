@@ -13,6 +13,7 @@
     background-color: transparent;
     cursor: pointer;
     outline-style: none;
+    visibility: hidden;
 }
 
 .grid-item__delete:hover {

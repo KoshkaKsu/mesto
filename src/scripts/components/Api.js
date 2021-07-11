@@ -46,6 +46,21 @@ _getResponseData(res) {
         .then(this._getResponseData)
   }
 
+  editUserInfo(name, job) {
+    return fetch(`${this._url}/users/me`, {
+        method: "PATCH",
+        headers: {
+          authorization: this._token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            about: job
+        })
+    })
+        .then(this._getResponseData)
+}
+
   setLike(id){
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',

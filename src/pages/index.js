@@ -5,11 +5,12 @@ import PopupWithImage from '../scripts/components/PopupWithImage';
 import PopupWithForm from '../scripts/components/PopupWithForm';
 import {PopupWithDelete} from '../scripts/components/PopupWithDelete'
 import Card from '../scripts/components/Card';
-import {FormValidator} from '../scripts/components/FormValidator';
+import FormValidator from '../scripts/components/FormValidator';
 import UserInfo from '../scripts/components/UserInfo';
 
 const profilePopup = document.querySelector('.popup_type_profile-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
+const profileEditAvatarButton = document.querySelector('.profile__edit-button-avatar');
 const profilePopupForm = document.querySelector('.popup__form_edit-profile');
 const nameSelector = '.profile__name';
 const jobSelector = '.profile__job';
@@ -26,14 +27,40 @@ const userInfo = new UserInfo({nameSelector, jobSelector, avatarSelector});
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
-const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
+/*const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
   const newProfileValues = {
     name: formInputs.name,
     job: formInputs.job
   }
   userInfo.setUserInfo(newProfileValues);
 });
+popupEditForm.setEventListeners();*/
+
+const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
+      api.editUserInfo(formInputs.name, formInputs.job)
+          .then(result => {
+              userInfo.setUserInfo(result.name, result.job);
+              popupEditForm.closePopup();
+          })
+          .catch((err) => {
+              console.log(err);
+          })
+  }
+);
 popupEditForm.setEventListeners();
+
+const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', ({link}) => {
+      api.updateAvatar(link)
+          .then(({avatar}) => {
+              userInfo.setUserAvatar(link);
+              popupEditAvatar.closePopup();
+          })
+          .catch((err) => {
+              console.log(err);
+          })
+  }
+)
+popupEditAvatar.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
   cardList.prependItem(createCard({
@@ -55,6 +82,8 @@ const validateConfig = {
 
 const api = new Api(`https://mesto.nomoreparties.co/v1/cohort-24`,'f12d97c5-3bd7-4a64-bc24-17e685180ee0');
 
+//const avatarUploadContainer = document.querySelector('.popup_type_avatar-edit');
+//const validatorAvatarUpload = new FormValidator(validateConfig, avatarUploadContainer);
 const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
 addFormValidator.enableValidation();
 const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
@@ -148,4 +177,19 @@ cardAddButton.addEventListener("click", (evt) => {
   addFormValidator.resetValidation();
   popupCardForm.openPopup();
 });
+
+/*validatorAvatarUpload.enableValidation();
+profileEditAvatarButton.addEventListener("click", (evt) => {
+  validatorAvatarUpload.resetValidation();
+  popupEditAvatar.openPopup();
+});*/
+
+
+
+
+
+
+
+
+
 

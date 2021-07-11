@@ -1,5 +1,5 @@
 export default class Card {
-    constructor({name, link, owner, _id}, cardSelector,{revealPhoto, handleCardDelete, likeCard},userId) {
+    constructor({name, link, owner, _id}, cardSelector,{revealPhoto, handleCardDelete, likeCard, dislikeCard},userId) {
       this._title = name;
       this._link = link;
       this._owner = owner._id;
@@ -26,9 +26,9 @@ export default class Card {
       this._cardImage.alt = this._title;
       this._cardName.textContent = this._title;
       this._setEventListeners(); 
-      /*if (this._userId === this._owner) {
+      if (this._userId === this._owner) {
         this._element.querySelector(this._cardDelete).classList.add('grid-item__delete_active');
-    }*/
+    }
       return this._element;
     }
   
