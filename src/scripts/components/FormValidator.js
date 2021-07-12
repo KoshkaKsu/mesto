@@ -7,14 +7,14 @@
   }
 
   _showInputError(inputElement, errorMessage) {
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(this._validateConfig.inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._validateConfig.errorClass);
   };
   
   _hideInputError(inputElement) {
-    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._validateConfig.inputErrorClass);
     errorElement.classList.remove(this._validateConfig.errorClass);
     errorElement.textContent = "";
@@ -38,7 +38,7 @@
     
      
     this._inputList.forEach((inputElement) => {
-      inputElement.addEventListener('input',() => {
+      inputElement.addEventListener("input",() => {
         this._checkInputValidity(inputElement);
         // чтобы проверять его при изменении любого из полей
         this._toggleButtonState();

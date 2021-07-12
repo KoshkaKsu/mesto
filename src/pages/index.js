@@ -42,7 +42,7 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs)
 popupEditForm.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) => {
-      api.updateAvatar(formData.avatarLink)
+      api.updateAvatar(formData.link)
           .then((res) => {
               userInfo.setUserAvatar(res.avatar);
               popupEditAvatar.closePopup();

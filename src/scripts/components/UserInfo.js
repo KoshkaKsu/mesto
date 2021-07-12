@@ -9,8 +9,8 @@ export default class UserInfo {
         const userInfoValues = {
             name: this._profileName.textContent,
             job: this._profileJob.textContent,
-            avatar: this._avatar,
-            id: this._id,
+            //avatar: this._avatar,
+            //id: this._id,
           };
         return userInfoValues;
     }
@@ -19,11 +19,11 @@ export default class UserInfo {
         this._profileName.textContent = userInfoValues.name;
         this._profileJob.textContent = userInfoValues.job;
         this._id = userInfoValues.id;
-        this._avatar = userInfoValues.avatar;
+        this._avatar.src = userInfoValues.avatar;
     }
 
     setUserAvatar(newAvatarLink) {
-        this._avatar = newAvatarLink;
+        this._avatar.src = newAvatarLink;
     }  
 
     getUserId() {
