@@ -14,9 +14,9 @@ _getResponseData(res) {
 //Загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
-      method: 'GET',
       headers: {
-        authorization: this._token
+        authorization: this._token,
+        'Content-Type': 'application/json'
       }
     })
       .then(this._getResponseData);
@@ -26,7 +26,8 @@ _getResponseData(res) {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
       headers: {
-        authorization: this._token
+        authorization: this._token,
+        'Content-Type': 'application/json'
       }
     })
       .then(this._getResponseData);
