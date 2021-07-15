@@ -28,10 +28,31 @@ const userInfo = new UserInfo({nameSelector, jobSelector, avatarSelector});
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
+const api = new Api(`https://mesto.nomoreparties.co/v1/cohort-24`,'f12d97c5-3bd7-4a64-bc24-17e685180ee0');
+
+//Получение инфорации по карточкам
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, item]) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      id: userData._id,
+   });
+    userInfo.setUserAvatar(userData.avatar);
+    section.renderItems(item);
+  })
+  .catch(error => {
+    console.log(`Ошибка при получении данных: ${error}`);
+  })
+
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
-      api.editUserInfo(formInputs.name, formInputs.job)
-          .then(result => {
-              userInfo.setUserInfo(result.name, result.job);
+  //console.log(formInputs);
+      api.editUserInfo(formInputs)
+          .then((formInputs) => {
+              userInfo.setUserInfo({
+                name: formInputs.name,
+                job: formInputs.about,
+              });
               popupEditForm.closePopup();
           })
           .catch((err) => {
@@ -96,26 +117,9 @@ const validatorAvatarUpload = new FormValidator (validateConfig, avatarPopupForm
 const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
 const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
 
-const api = new Api(`https://mesto.nomoreparties.co/v1/cohort-24`,'f12d97c5-3bd7-4a64-bc24-17e685180ee0');
-
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();
 validatorAvatarUpload.enableValidation();
-
-//Получение инфорации по карточкам
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then(([userData, item]) => {
-    userInfo.setUserInfo({
-      name: userData.name,
-      job: userData.about,
-      id: userData._id,
-   });
-    userInfo.setUserAvatar(userData.avatar);
-    section.renderItems(item);
-  })
-  .catch(error => {
-    console.log(`Ошибка при получении данных: ${error}`);
-  })
 
 // создание нового элемента карточки.
   const section = new Section({
@@ -160,11 +164,11 @@ function createCard(item) {
 }
 
 profileEditButton.addEventListener("click", (evt) => {
-  //evt.preventDefault();
-  //evt.stopPropagation();
-  //const profileInfo = userInfo.getUserInfo(); 
-  //profileNameInput.value = profileInfo.name;
-  //profileJobInput.value = profileInfo.job;
+  evt.preventDefault();
+  evt.stopPropagation();
+  const profileInfo = userInfo.getUserInfo(); 
+  profileNameInput.value = profileInfo.name;
+  profileJobInput.value = profileInfo.job;
   editFormValidator.clearInputErrors();
   editFormValidator.resetValidation();
   popupEditForm.openPopup();

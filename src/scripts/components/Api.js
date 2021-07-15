@@ -47,7 +47,8 @@ _getResponseData(res) {
         .then(this._getResponseData)
   }
 
-  editUserInfo(name, job) {
+  editUserInfo(obj) {
+    //console.log(obj);
     return fetch(`${this._url}/users/me`, {
         method: "PATCH",
         headers: {
@@ -55,11 +56,11 @@ _getResponseData(res) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: name,
-            about: job
+            name: obj.name,
+            about: obj.job
         })
     })
-        .then(this._getResponseData)
+        .then(this._getResponseData);
 }
 
  addCard(name, link) {
