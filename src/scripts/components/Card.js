@@ -7,6 +7,7 @@ export default class Card {
       this._owner = owner;
       this._id = _id;
       this._likes = likes;
+      this._userId = userId;
       this._cardSelector = cardSelector;
       this._element = this._getTemplate();
       this._revealPhoto = revealPhoto;
@@ -15,7 +16,6 @@ export default class Card {
       this._handleCardLike = handleCardLike;
       this._cardsLike = '.grid-item__like';
       this._cardDelete = '.grid-item__delete';
-      this._userId = userId;
     }
     
     _getTemplate() {
@@ -35,15 +35,8 @@ export default class Card {
          this._element.querySelector(this._cardDelete).classList.add('grid-item__delete_active');
       }
       if (this.isLiked()) {
-        // сделать иконку активной
-        this._element.querySelector(this._cardsLike).classList.add('grid-item__like_active'); // тогда черным
+        this._element.querySelector(this._cardsLike).classList.add('grid-item__like_active');
       }
-      /*this._likes.forEach((like) => {
-        if (like._id === this._userId) {
-            this._element.querySelector(this._cardsLike).classList.toggle("'grid-item__like_active");
-            return;
-        }
-      })*/
       return this._element; 
     }
   
@@ -67,12 +60,9 @@ export default class Card {
 
     isLiked() {
       let hasLike = false;
-      // проходимся по каждому лайкнувшему карточку
-      this._likes.forEach(likedUser => {
-        let valuesArr = Object.values(likedUser)
-        // если содержит АйДи пользователя
-        if (valuesArr.includes(this._userId)) {
-          // значит карточка уже лайканая
+      this._likes.forEach(item => {
+        let arrayLikes = Object.values(item)
+        if (arrayLikes.includes(this._userId)) {
           hasLike = true;
         }
       })
@@ -84,7 +74,7 @@ export default class Card {
       const deleteImage = this._element.querySelector('.grid-item__delete');
       deleteImage.addEventListener('click', () => this._deleteCard());
       const cardsLike = this._element.querySelector(this._cardsLike);
-     cardsLike.addEventListener('click', () => {
+      cardsLike.addEventListener('click', () => {
         const trigger = this._element.querySelector(this._cardsLike).classList.contains("grid-item__like_active");
         if (trigger) {
             this._dislikeCard();
