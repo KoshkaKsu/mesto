@@ -46,7 +46,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   })
 
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
-  //console.log(formInputs);
       api.editUserInfo(formInputs)
           .then((formInputs) => {
               userInfo.setUserInfo({
@@ -143,7 +142,7 @@ function createCard(item) {
       api.setLike(id)
           .then(({likes}) => {
               card._likes = likes;
-              //card.likesCount();
+              card.likesCount();
           })
           .catch((err) => {
               console.log(err);
@@ -153,7 +152,7 @@ function createCard(item) {
       api.unLike(id)
           .then(({likes}) => {
               card._likes = likes;
-              //card.likesCount();
+              card.likesCount();
           })
           .catch((err) => {
               console.log(err);
@@ -175,7 +174,6 @@ profileEditButton.addEventListener("click", (evt) => {
 });
 
 cardAddButton.addEventListener("click", (evt) => {
- // cardPopupForm.reset();
   evt.preventDefault()
   evt.stopPropagation()
   addFormValidator.clearInputErrors();
