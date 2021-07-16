@@ -76,15 +76,15 @@ const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) 
 popupEditAvatar.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
-      api.addCard(formInputs.title, formInputs.link)
-           .then(formInputs => {
-               const element = createCard(formInputs)
-               section.addItem(element);
-            })
-            .catch((err) => {
-                console.log(err);
-  })
-       popupCardForm.closePopup();
+  api.addCard(formInputs.title, formInputs.link)
+       .then(formInputs => {
+           const element = createCard(formInputs)
+           section.addItem(element);
+        })
+        .catch((err) => {
+            console.log(err);
+})
+   popupCardForm.closePopup();
 })
 popupCardForm.setEventListeners();
 
@@ -122,7 +122,7 @@ editFormValidator.enableValidation();
 validatorAvatarUpload.enableValidation();
 
 // создание нового элемента карточки.
-  const section = new Section({
+const section = new Section({
     renderer: (item) => {
         const card = createCard(item);
         section.addItem(card);
@@ -143,7 +143,7 @@ function createCard(item) {
       api.setLike(id)
           .then(({likes}) => {
               card._likes = likes;
-              card.likesCount();
+              //card.likesCount();
           })
           .catch((err) => {
               console.log(err);
@@ -153,7 +153,7 @@ function createCard(item) {
       api.unLike(id)
           .then(({likes}) => {
               card._likes = likes;
-              card.likesCount();
+              //card.likesCount();
           })
           .catch((err) => {
               console.log(err);
@@ -176,8 +176,8 @@ profileEditButton.addEventListener("click", (evt) => {
 
 cardAddButton.addEventListener("click", (evt) => {
  // cardPopupForm.reset();
- // evt.preventDefault()
- // evt.stopPropagation()
+  evt.preventDefault()
+  evt.stopPropagation()
   addFormValidator.clearInputErrors();
   addFormValidator.resetValidation();
   popupCardForm.openPopup();
