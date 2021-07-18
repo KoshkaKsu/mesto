@@ -6,20 +6,15 @@ export default class PopupWithForm extends Popup  {
             this._inputList = this._form.querySelectorAll('.popup__form-input');
             this._submitForm = submitForm; 
             this._prevTextBtn = this._popup.querySelector('.popup__button-save').textContent;
+            this._btnSave = this._popup.querySelector('.popup__button-save');
     }   
-        renderLoading(isLoading) {
+        renderLoading(isLoading, loadingText) {
             if(isLoading) {
-                if (this._popup.classList.contains('popup_type_card-add')) {
-                    this._popup.querySelector('.popup__button-save').textContent = 'Создание...';
-                     }
-                else {
-                    this._popup.querySelector('.popup__button-save').textContent = 'Сохранение...';
-                }
+                this._btnSave.textContent = loadingText;
             } else 
               {
-                this._popup.querySelector('.popup__button-save').textContent = this._prevTextBtn;
-            }
-            
+                this._btnSave.textContent = this._prevTextBtn;
+            }   
     }
         _getInputValues() {
             this._formValues = {};

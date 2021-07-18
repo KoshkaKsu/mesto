@@ -42,7 +42,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   
 
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
-      popupEditForm.renderLoading(true);
+      popupEditForm.renderLoading(true, 'Сохранение...');
       api.editUserInfo(formInputs)
           .then((formInputs) => {
               userInfo.setUserInfo({
@@ -62,7 +62,7 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs)
 popupEditForm.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) => {
-      popupEditAvatar.renderLoading(true);
+      popupEditAvatar.renderLoading(true, 'Сохранение...');
       api.updateAvatar(formData.link)
           .then((res) => {
               userInfo.setUserAvatar(res.avatar);
@@ -79,7 +79,7 @@ const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) 
 popupEditAvatar.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
-  popupCardForm.renderLoading(true);
+  popupCardForm.renderLoading(true, 'Создание...');
   api.addCard(formInputs.title, formInputs.link)
        .then(formInputs => {
            const element = createCard(formInputs)

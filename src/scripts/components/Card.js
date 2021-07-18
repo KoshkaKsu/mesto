@@ -70,12 +70,6 @@ export default class Card {
     })
     return hasLike;
   }
-
-  checkUserId(userId) {
-    if (userId === this._owner._id) {
-    this._element.querySelector(this._cardDelete).classList.add('grid-item__delete_active');
-  };
-}
   
   _setEventListeners() {
     this._cardImage.addEventListener('click', () => this._revealPhoto(this._title, this._link));

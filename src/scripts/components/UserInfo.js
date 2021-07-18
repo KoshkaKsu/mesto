@@ -9,7 +9,7 @@ export default class UserInfo {
         const userInfoValues = {
             name: this._profileName.textContent,
             job: this._profileJob.textContent,
-            userId: this._id,
+           // userId: this._id,
           };
         return userInfoValues;
     }
