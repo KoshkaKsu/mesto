@@ -30,7 +30,7 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._title;
     this._cardName.textContent = this._title;
-    this._setEventListeners(); 
+    //this._setEventListeners(); 
     if (this._userId === this._owner._id) {
       this._element.querySelector(this._cardDelete).classList.add('grid-item__delete_active');
     };
@@ -38,6 +38,7 @@ export default class Card {
     if (this.isLiked()) {
       this._element.querySelector(this._cardsLike).classList.add('grid-item__like_active');
     };
+    this._setEventListeners(); 
     return this._element; 
   }
 
@@ -69,6 +70,12 @@ export default class Card {
     })
     return hasLike;
   }
+
+  checkUserId(userId) {
+    if (userId === this._owner._id) {
+    this._element.querySelector(this._cardDelete).classList.add('grid-item__delete_active');
+  };
+}
   
   _setEventListeners() {
     this._cardImage.addEventListener('click', () => this._revealPhoto(this._title, this._link));

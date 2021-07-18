@@ -46,10 +46,10 @@
     const isValid = this._inputList.some((inputElement) => !inputElement.validity.valid);
     if (isValid) {
       this._buttonElement.setAttribute('disabled', true);
-      this._buttonElement.classList.add(this.inactiveButtonClass);
+      this._buttonElement.classList.add(this._validateConfig.inactiveButtonClass);
     } else {
         this._buttonElement.removeAttribute('disabled', true);
-        this._buttonElement.classList.remove(this.inactiveButtonClass);
+        this._buttonElement.classList.remove(this._validateConfig.inactiveButtonClass);
     }
   };
 
