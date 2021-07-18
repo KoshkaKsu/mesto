@@ -1,4 +1,7 @@
 import './index.css';
+import {profileEditButton, profileEditAvatarButton, profilePopupForm, nameSelector, jobSelector, avatarSelector, profileNameInput,
+profileJobInput, cardPopupForm, cardAddButton, photosList, avatarPopup, avatarPopupForm } from '../scripts/utils/constans.js';
+import {validateConfig} from '../scripts/utils/constans.js';
 import Api from "../scripts/components/Api";
 import Section from '../scripts/components/Section';
 import PopupWithImage from '../scripts/components/PopupWithImage';
@@ -7,22 +10,6 @@ import {PopupWithDelete} from '../scripts/components/PopupWithDelete'
 import Card from '../scripts/components/Card';
 import FormValidator from '../scripts/components/FormValidator';
 import UserInfo from '../scripts/components/UserInfo';
-
-const profilePopup = document.querySelector('.popup_type_profile-edit');
-const profileEditButton = document.querySelector('.profile__edit-button');
-const profileEditAvatarButton = document.querySelector('.profile__edit-button-avatar');
-const profilePopupForm = document.querySelector('.popup__form_edit-profile');
-
-const nameSelector = '.profile__name';
-const jobSelector = '.profile__job';
-const avatarSelector = '.profile__avatar'
-const profileNameInput = profilePopup.querySelector('.popup__profile_name_name');
-const profileJobInput = profilePopup.querySelector('.popup__profile_name_job');
-
-const cardPopup = document.querySelector('.popup_type_card-add');
-const cardPopupForm = cardPopup.querySelector('.popup__form_card-add');
-const cardAddButton = document.querySelector('.profile__add-button');
-const photosList = document.querySelector('.elements');
 
 const userInfo = new UserInfo({nameSelector, jobSelector, avatarSelector});
 const popupWithImage = new PopupWithImage('.popup_type_image');
@@ -46,6 +33,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   })
 
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs) => {
+      popupEditForm.renderLoading(true);
       api.editUserInfo(formInputs)
           .then((formInputs) => {
               userInfo.setUserInfo({
@@ -57,11 +45,15 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit', (formInputs)
           .catch((err) => {
               console.log(err);
           })
+          .finally(() => {
+            popupEditForm.renderLoading(false)
+          })
   }
 );
 popupEditForm.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) => {
+      popupEditAvatar.renderLoading(true);
       api.updateAvatar(formData.link)
           .then((res) => {
               userInfo.setUserAvatar(res.avatar);
@@ -70,20 +62,27 @@ const popupEditAvatar = new PopupWithForm('.popup_type_avatar-edit', (formData) 
           .catch((err) => {
               console.log(err);
           })
+          .finally(() => {
+            popupEditAvatar.renderLoading(false)
+          })
   }
 )
 popupEditAvatar.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card-add', (formInputs) => {
+  popupCardForm.renderLoading(true);
   api.addCard(formInputs.title, formInputs.link)
        .then(formInputs => {
            const element = createCard(formInputs)
-           section.addItem(element);
+           section.prependItem(element);
+           popupCardForm.closePopup();
         })
         .catch((err) => {
             console.log(err);
-})
-   popupCardForm.closePopup();
+        })
+        .finally(() => {
+          popupCardForm.renderLoading(false)
+        })
 })
 popupCardForm.setEventListeners();
 
@@ -100,18 +99,6 @@ const deleteCardImage = new PopupWithDelete('.popup_type_delete',(id) => {
 )
 deleteCardImage.setEventListeners();
 
-const validateConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__profile',
-  submitButtonSelector: '.popup__button-save',
-  inactiveButtonClass: 'popup__button-disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-  templateClass: '.photo-template',
-};
-
-const avatarPopup = document.querySelector('.popup_type_avatar-edit');
-const avatarPopupForm = avatarPopup.querySelector('.popup__form_avatar-update');
 const validatorAvatarUpload = new FormValidator (validateConfig, avatarPopupForm);
 const addFormValidator = new FormValidator (validateConfig, cardPopupForm);
 const editFormValidator = new FormValidator (validateConfig, profilePopupForm);
@@ -141,7 +128,7 @@ function createCard(item) {
     handleCardLike: (id) => {
       api.setLike(id)
           .then(({likes}) => {
-              card._likes = likes;
+              card.likes = likes;
               card.likesCount();
           })
           .catch((err) => {
@@ -151,7 +138,7 @@ function createCard(item) {
     handleCardDislike: (id) => {
       api.unLike(id)
           .then(({likes}) => {
-              card._likes = likes;
+              card.likes = likes;
               card.likesCount();
           })
           .catch((err) => {
@@ -181,7 +168,7 @@ cardAddButton.addEventListener("click", (evt) => {
   popupCardForm.openPopup();
 });
 
-profileEditAvatarButton.addEventListener("click", (evt) => {
+profileEditAvatarButton.addEventListener("click", () => {
   validatorAvatarUpload.clearInputErrors();
   validatorAvatarUpload.resetValidation();
   popupEditAvatar.openPopup();

@@ -48,7 +48,6 @@ _getResponseData(res) {
   }
 
   editUserInfo(obj) {
-    //console.log(obj);
     return fetch(`${this._url}/users/me`, {
         method: "PATCH",
         headers: {

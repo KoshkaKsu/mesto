@@ -29,12 +29,6 @@
   }
   
   _setEventListeners() {
-   // this._toggleButtonState();
-    /*this._formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._buttonElement.setAttribute("disabled", true);
-      this._buttonElement.classList.add(this._validateConfig.inactiveButtonClass);
-    });*/ 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input",() => {
         this._checkInputValidity(inputElement);
